@@ -1,0 +1,321 @@
+---
+title: "LCSC"
+author: "Arun Kumar"
+date: "2023-06-07"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## 
+
+
+
+```{r }
+library(tidyverse)
+library(readxl)
+
+```
+
+## SPFA_Data
+# Reda SPFA Data sheet from excle sheet1
+
+```{r, echo=FALSE}
+raw_data <- read_excel("data/DEGs in SP FA _CD133+FA_EpCAM+FA _1_(Autosaved).xlsx", sheet = 1)
+```
+# select the data column
+```{r}
+raw_sub <- raw_data %>% 
+  select(.,`Gene symbol`,Log2FoldChange,`-log(P-value)`,`FDR DOWN`)
+
+```
+
+# filter the data on criteria 
+# log2fold between (0.6 to -0.6)
+# -log(p-value) between (2 to -2)
+# FDRdown < 0.05
+
+## SPFA DEGs (all)
+```{r}
+
+ All_DEGs_SPFA <- subset(raw_sub, (Log2FoldChange > 0.6 | Log2FoldChange < -0.6) & (`-log(P-value)` > 2 | `-log(P-value)` < -2) & `FDR DOWN`< 0.05)
+write.csv(All_DEGs_SPFA,"SP NSP Up_Dn DEGs/1.All_DEGs_SPFA.csv")
+```
+
+# SP FA up Regulated DEGs > 0.6 log2foldchange
+```{r}
+spfA_upregulated_DEGs <- subset(All_DEGs_SPFA, (Log2FoldChange > 0.6))
+
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^spfA_upregulated_DEGs$Log2FoldChange
+
+spfA_upregulated_DEGs_FC <- cbind(spfA_upregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(spfA_upregulated_DEGs_FC,"SP NSP Up_Dn DEGs/2.spfA_upreg_DEGs_FC.csv")
+```
+
+## SPFA Down Regulated DEGs < 0.6 log2foldchange
+
+```{r}
+spfA_downregulated_DEGs <- subset(All_DEGs_SPFA, (Log2FoldChange < 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^spfA_downregulated_DEGs$Log2FoldChange
+
+spfA_downregulated_DEGs_FC <- cbind(spfA_downregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(spfA_downregulated_DEGs_FC,"SP NSP Up_Dn DEGs/3.spfA_downreg_DEGs_FC.csv")
+```
+
+
+### NSP FA Data
+# Reda SPFA Data sheet from excle sheet 5
+
+
+```{r}
+ raw_data_NSPFA <- read_excel("data/DEGs in SP FA _CD133+FA_EpCAM+FA _1_(Autosaved).xlsx", sheet = 5)
+```
+
+# select the data column
+```{r}
+raw_sub_NSPFA <-  raw_data_NSPFA %>% 
+  select(.,`Gene symbol`,Log2FoldChange,`-log(P-value)`,`FDR DOWN`)
+```
+
+# filter the data on criteria 
+#log2fold between (0.6 to -0.6)
+# -log(p-value) between (2 to -2)
+# FDRdown < 0.05
+
+
+# All NSPFA DEGs
+```{r}
+All_DEGS_NSPFA <- subset(raw_sub_NSPFA, (Log2FoldChange > 0.6 | Log2FoldChange < -0.6) & (`-log(P-value)` > 2 | `-log(P-value)` < -2) & `FDR DOWN`< 0.05)
+
+write.csv(All_DEGS_NSPFA,"SP NSP Up_Dn DEGs/4.All_DEGS_NSPFA.csv")
+```
+
+# NSPFA up Regulated DEGs > 0.6 log2foldchange
+
+```{r}
+nspfA_upregulated_DEGs <- subset(All_DEGS_NSPFA, (Log2FoldChange > 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^nspfA_upregulated_DEGs$Log2FoldChange
+
+nspfA_upregulated_DEGs_FC <- cbind(nspfA_upregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(nspfA_upregulated_DEGs_FC,"SP NSP Up_Dn DEGs/5.nspfA_upreg_DEGs_FC.csv")
+```
+
+# NSPFA up Regulated DEGs < 0.6 log2foldchange
+```{r}
+nspfA_downregulated_DEGs <- subset(All_DEGS_NSPFA, (Log2FoldChange < 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^nspfA_downregulated_DEGs$Log2FoldChange
+
+nspfA_downregulated_DEGs_FC <- cbind(nspfA_downregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(nspfA_downregulated_DEGs_FC,"SP NSP Up_Dn DEGs/6.nspfA_Dnreg_DEGs_FC.csv")
+```
+
+## CD133+FA_Data
+# Read CD133+FA Data sheet from excle sheet 2
+
+```{r}
+raw_data_CD133PFA <- read_excel("data/DEGs in SP FA _CD133+FA_EpCAM+FA _1_(Autosaved).xlsx", sheet = 2)
+# select the data column
+raw_sub_CD133PFA <-  raw_data_CD133PFA %>% 
+  select(.,`Gene symbol`,Log2FoldChange,`-log(P-value)`,`FDR DOWN`)
+
+```
+
+# filter the data on criteria 
+#log2fold between (0.6 to -0.6)
+# -log(p-value) between (2 to -2)
+# FDRdown < 0.05
+
+
+# All CD133+FA DEGs
+
+```{r}
+All_DEGS_CD133PFA <- subset(raw_sub_CD133PFA, (Log2FoldChange > 0.6 | Log2FoldChange < -0.6) & (`-log(P-value)` > 2 | `-log(P-value)` < -2) & `FDR DOWN`< 0.05)
+
+write.csv(All_DEGS_CD133PFA,"SP NSP Up_Dn DEGs/7.All_DEGS_CD133PFA.csv")
+```
+
+# CD133PFA up Regulated DEGs > 0.6 log2foldchange
+
+```{r}
+CD133PFA_upregulated_DEGs <- subset(All_DEGS_CD133PFA, (Log2FoldChange > 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^CD133PFA_upregulated_DEGs$Log2FoldChange
+
+CD133PFA_upregulated_DEGs_FC <- cbind(CD133PFA_upregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(CD133PFA_upregulated_DEGs_FC,"SP NSP Up_Dn DEGs/8.CD133PFA_upregulated_DEGs_FC.csv")
+```
+
+# CD133PFA Down Regulated DEGs < 0.6 log2foldchange
+
+```{r}
+CD133PFA_downregulated_DEGs <- subset(All_DEGS_CD133PFA, (Log2FoldChange < 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^CD133PFA_downregulated_DEGs$Log2FoldChange
+
+CD133PFA_downregulated_DEGs_FC <- cbind(CD133PFA_downregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(CD133PFA_downregulated_DEGs_FC,"SP NSP Up_Dn DEGs/9.CD133PFA_downregulated_DEGs_FC.csv")
+```
+
+## CD133-FA_Data
+# Read CD133-FA Data sheet from excle sheet 6
+
+```{r}
+raw_data_CD133NFA <- read_excel("data/DEGs in SP FA _CD133+FA_EpCAM+FA _1_(Autosaved).xlsx", sheet = 6)
+# select the data column
+raw_sub_CD133NFA <-  raw_data_CD133NFA %>% 
+  select(.,`Gene symbol`,Log2FoldChange,`-log(P-value)`,`FDR DOWN`)
+```
+
+# filter the data on criteria 
+#log2fold between (0.6 to -0.6)
+# -log(p-value) between (2 to -2)
+# FDRdown < 0.05
+
+
+# All CD133-FA DEGs
+
+```{r}
+All_DEGS_CD133NFA <- subset(raw_sub_CD133NFA, (Log2FoldChange > 0.6 | Log2FoldChange < -0.6) & (`-log(P-value)` > 2 | `-log(P-value)` < -2) & `FDR DOWN`< 0.05)
+
+write.csv(All_DEGS_CD133NFA,"SP NSP Up_Dn DEGs/10.All_DEGS_CD133NFA.csv")
+```
+
+# CD133NFA up Regulated DEGs > 0.6 log2foldchange
+
+```{r}
+CD133NFA_upregulated_DEGs <- subset(All_DEGS_CD133NFA , (Log2FoldChange > 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^CD133NFA_upregulated_DEGs$Log2FoldChange
+
+CD133NFA_upregulated_DEGs_FC <- cbind(CD133NFA_upregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(CD133NFA_upregulated_DEGs_FC,"SP NSP Up_Dn DEGs/11.CD133NFA_upregulated_DEGs_FC.csv")
+```
+
+# CD133NFA down Regulated DEGs < 0.6 log2foldchange
+
+```{r}
+
+CD133NFA_downregulated_DEGs <- subset(All_DEGS_CD133NFA , (Log2FoldChange < 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^CD133NFA_downregulated_DEGs$Log2FoldChange
+
+CD133NFA_downregulated_DEGs_FC <- cbind(CD133NFA_downregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(CD133NFA_downregulated_DEGs_FC,"SP NSP Up_Dn DEGs/12.CD133NFA_downregulated_DEGs_FC.csv")
+
+```
+
+## EpCAM+FA_Data
+# Read EpCAM+FA_Data sheet from excle sheet 3
+
+```{r}
+raw_data_EpCAMPFA <- read_excel("data/DEGs in SP FA _CD133+FA_EpCAM+FA _1_(Autosaved).xlsx", sheet = 3)
+# select the data column
+raw_sub_EpCAMPFA <-  raw_data_EpCAMPFA %>% 
+  select(.,`Gene symbol`,Log2FoldChange,`-log(P-value)`,`FDR DOWN`)
+```
+
+```{r}
+All_DEGS_EpCAMPFA <- subset(raw_sub_EpCAMPFA , (Log2FoldChange > 0.6 | Log2FoldChange < -0.6) & (`-log(P-value)` > 2 | `-log(P-value)` < -2) & `FDR DOWN`< 0.05)
+
+write.csv(All_DEGS_CD133NFA,"SP NSP Up_Dn DEGs/13.All_DEGS_EpCAMPFA.csv")
+```
+
+# EpCAM+FA up Regulated DEGs > 0.6 log2foldchange
+
+
+```{r}
+
+EpCAMPFA_upregulated_DEGs <- subset(All_DEGS_EpCAMPFA , (Log2FoldChange > 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^EpCAMPFA_upregulated_DEGs$Log2FoldChange
+
+EpCAMPFA_upregulated_DEGs_FC <- cbind(EpCAMPFA_upregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(EpCAMPFA_upregulated_DEGs_FC,"SP NSP Up_Dn DEGs/14.EpCAMPFA_upreg_DEGs_FC.csv")
+```
+
+# EpCAM+FA DownRegulated DEGs < 0.6 log2foldchange
+
+
+```{r}
+
+EpCAMPFA_downregulated_DEGs <- subset(All_DEGS_EpCAMPFA , (Log2FoldChange < 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^EpCAMPFA_downregulated_DEGs$Log2FoldChange
+
+EpCAMPFA_downregulated_DEGs_FC <- cbind(EpCAMPFA_downregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(EpCAMPFA_downregulated_DEGs_FC,"SP NSP Up_Dn DEGs/15.EpCAMPFA_downregulated_DEGs_FC.csv")
+
+```
+
+##EpCAM-FA_Data 
+# Read EpCAM-FA_Data Data sheet from excle sheet 7
+
+
+```{r}
+
+raw_data_EpCAMNFA <- read_excel("data/DEGs in SP FA _CD133+FA_EpCAM+FA _1_(Autosaved).xlsx", sheet = 7)
+# select the data column
+raw_sub_EpCAMNFA <-  raw_data_EpCAMNFA %>% 
+  select(.,`Gene symbol`,Log2FoldChange,`-log(P-value)`,`FDR DOWN`)
+
+```
+
+#
+
+```{r}
+
+All_DEGS_EpCAMNFA <- subset(raw_sub_EpCAMNFA , (Log2FoldChange > 0.6 | Log2FoldChange < -0.6) & (`-log(P-value)` > 2 | `-log(P-value)` < -2) & `FDR DOWN`< 0.05)
+
+write.csv(All_DEGS_EpCAMNFA,"SP NSP Up_Dn DEGs/16.All_DEGS_EpCAMNFA.csv")
+```
+
+# EpCAM-FA up Regulated DEGs > 0.6 log2foldchange
+
+```{r}
+
+EpCAMNFA_upregulated_DEGs <- subset(All_DEGS_EpCAMNFA , (Log2FoldChange > 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^EpCAMNFA_upregulated_DEGs$Log2FoldChange
+
+EpCAMNFA_upregulated_DEGs_FC <- cbind(EpCAMNFA_upregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(EpCAMNFA_upregulated_DEGs_FC,"SP NSP Up_Dn DEGs/17.EpCAMNFA_upregulated_DEGs_FC.csv")
+```
+
+##EpCAM-FA DownRegulated DEGs < 0.6 log2foldchange
+
+```{r}
+
+
+EpCAMNFA_downregulated_DEGs <- subset(All_DEGS_EpCAMNFA , (Log2FoldChange < 0.6))
+## calculate fold change and add the column in data frame.
+Fold_Change <- 2^EpCAMNFA_downregulated_DEGs$Log2FoldChange
+
+EpCAMNFA_downregulated_DEGs_FC <- cbind(EpCAMNFA_downregulated_DEGs, FoldChange = Fold_Change)
+
+write.csv(EpCAMNFA_downregulated_DEGs_FC,"SP NSP Up_Dn DEGs/18.EpCAMNFA_downregulated_DEGs_FC.csv")
+```
+
+
+
+
+
+

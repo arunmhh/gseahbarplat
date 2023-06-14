@@ -1,0 +1,1306 @@
+---
+title: "SP venn barplots"
+author: "Arun Kumar"
+date: "2023-06-05"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+## run libraries
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+#library(patchwork)
+library(readxl)
+library(stringr)
+library(dplyr)
+```
+
+## Including Plots
+
+##read data file
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent
+from printing
+
+## read the file
+##1
+```{r}
+vdf1_12_45gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 3) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+```
+
+##1
+```{r}
+vdf1_12_45gene$Term <- factor(vdf1_12_45gene$Term, levels = rev(vdf1_12_45gene$Term))
+```
+
+##1
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf1_12_45geneplot <- ggplot(vdf1_12_45gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn Comparison of 12+45 Up Regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.5, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023//vdf1_12_45gene_1.jpg", plot = last_plot(), width = 10, height = 15, dpi = 600)
+
+plot(vdf1_12_45geneplot)
+```
+
+##2
+```{r ,echo=FALSE, fig.height= 15, fig.width=10}
+vdf2_12_358gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 4) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_12_358gene$Term <- factor(vdf2_12_358gene$Term, levels = rev(vdf2_12_358gene$Term))
+
+vdf2_12_358geneplot<- ggplot(vdf2_12_358gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of 12+358 Up Regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.5, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023//vdf2_12_358gene_2.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+
+plot(vdf2_12_358geneplot)
+```
+
+
+##3
+
+```{r,echo=FALSE, fig.height=12, fig.width=10}
+
+vdf3_12_36gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 5) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf3_12_36gene$Term <- factor(vdf3_12_36gene$Term, levels = rev(vdf3_12_36gene$Term))
+
+vdf3_12_36geneplot <- ggplot(vdf3_12_36gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of 12+36 UP regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.5, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf3_12_36gene_3.jpg", plot = last_plot(),width = 10, height = 10, dpi = 600)
+
+plot(vdf3_12_36geneplot)
+
+```
+
+
+##4
+
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf4_1273_SPFAgene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 6) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf4_1273_SPFAgene$Term <- factor(vdf4_1273_SPFAgene$Term, levels = rev(vdf4_1273_SPFAgene$Term))
+
+vdf4_1273_SPFAgeneplot <- ggplot(vdf4_1273_SPFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of 1273 SPFA UP regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf4_1273_SPFAgene_4.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+plot(vdf4_1273_SPFAgeneplot)
+```
+
+
+##5
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+
+vdf5_270_CD133PFAgene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 7) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf5_270_CD133PFAgene$Term <- factor(vdf5_270_CD133PFAgene$Term, levels = rev(vdf5_270_CD133PFAgene$Term))
+
+vdf5_270_CD133PFAgeneplot <- ggplot(vdf5_270_CD133PFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of 270 Up Regulated CD133+ FA genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf5_270_CD133PFAgene_5.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+
+plot(vdf5_270_CD133PFAgeneplot)
+```
+
+
+##6
+
+```{r , echo=FALSE, fig.height=20, fig.width=10}
+vdf6_1262_EpCAMPFAgene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 8) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf6_1262_EpCAMPFAgene$Term <- factor(vdf6_1262_EpCAMPFAgene$Term, levels = rev(vdf6_1262_EpCAMPFAgene$Term))
+
+vdf6_1262_EpCAMPFAgeneplot <- ggplot(vdf6_1262_EpCAMPFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of 1262 EpCAM+FA Up regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf6_1262_EpCAMPFAgene_6.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+
+plot (vdf6_1262_EpCAMPFAgeneplot)
+```
+
+
+## venn comparsion of SPFA, cd133-FA and EpCAM-FA down regulated genes
+##7 have no data
+```{r, echo=TRUE}
+# vdf7_2_4_gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 9) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+# 
+# vdf7_2_4_gene$Term <- factor(vdf7_2_4_gene$Term, levels = rev(vdf7_2_4_gene$Term))
+# 
+# vdf7_2_4_geneplot <- ggplot(vdf7_2_4_gene, aes(y = count, x = Term, fill = LogP)) + 
+#   geom_bar(stat = "identity", position = "dodge")+
+#   ggtitle("Venn comparsion of 2+4 Down Regulated genes")+   
+#   facet_grid(category~., scales = "free", space = "free") + 
+#   scale_fill_gradient(low="#F11712",high="#0099F7") +
+#   coord_flip() + 
+#   theme_classic() +
+#   theme(plot.title = element_text(hjust = 1.5, size = (20)),
+#         strip.text.y = element_text(size = 14),
+#         legend.position ="right",
+#         legend.title = element_text(size=18),
+#         legend.text = element_text(size=14),
+#         axis.text.x = element_text(size=14),
+#         axis.text.y = element_text(size=18),
+#         axis.title.x = element_text(size=14),
+#         axis.title.y = element_text(size=14))
+# ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf7_2_4_gene_7.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+# 
+# plot(vdf7_2_4_geneplot)
+```
+
+##8
+
+```{r, echo=FALSE, fig.height= 3, fig.width=10}
+vdf8_0_16_gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 10) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf8_0_16_gene$Term <- factor(vdf8_0_16_gene$Term, levels = rev(vdf8_0_16_gene$Term))
+
+vdf8_0_16_geneplot <- ggplot(vdf8_0_16_gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of 0+16 Down Regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.5, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf8_0_16_gene_8.jpg", plot = last_plot(),width = 10, height = 3, dpi = 600)
+
+plot(vdf8_0_16_geneplot)
+```
+
+
+##9
+
+```{r , echo=FALSE, fig.height=20, fig.width=10}
+vdf9_0_71_gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 11) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf9_0_71_gene$Term <- factor(vdf9_0_71_gene$Term, levels = rev(vdf9_0_71_gene$Term))
+
+vdf9_0_71_geneplot <- ggplot(vdf9_0_71_gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of 0+71 Down Regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 10, face = "bold"),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf9_0_71_gene_9.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+
+plot(vdf9_0_71_geneplot)
+
+```
+
+##10
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+
+vdf10_74SPFA_gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 12) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf10_74SPFA_gene$Term <- factor(vdf10_74SPFA_gene$Term, levels = rev(vdf10_74SPFA_gene$Term))
+
+vdf10_74SPFA_geneplot <- ggplot(vdf10_74SPFA_gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of SPFA Down regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf10_74SPFA_gene_10.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+
+plot(vdf10_74SPFA_geneplot)
+
+```
+
+##11
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf11_CD133PFA_438gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 13) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf11_CD133PFA_438gene$Term <- factor(vdf11_CD133PFA_438gene$Term, levels = rev(vdf11_CD133PFA_438gene$Term))
+
+vdf11_CD133PFA_438geneplot <- ggplot(vdf11_CD133PFA_438gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of CD133+FA Down regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf11_CD133PFA_438gene_11.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+
+plot(vdf11_CD133PFA_438geneplot)
+
+```
+
+##12
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf12_EpCAMPFA_1067gene <- read_excel("data/venn sorted list of Genes in SP FA_cd133+FA_EpCAM+ FA up_dn  reg_genes.xlsx", sheet = 14) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf12_EpCAMPFA_1067gene$Term <- factor(vdf12_EpCAMPFA_1067gene$Term, levels = rev(vdf12_EpCAMPFA_1067gene$Term))
+
+vdf12_EpCAMPFA_1067geneplot <- ggplot(vdf12_EpCAMPFA_1067gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparison of EpCAM+FA Down Regulated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/vdf12_EpCAMPFA_1067gene_12.jpg", plot = last_plot(),width = 10, height = 15, dpi = 600)
+
+plot(vdf12_EpCAMPFA_1067geneplot)
+```
+
+## NSP FA CD133-FA and EpCAM- FA fraction
+## up regulated DEGs comparsion 
+##1
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf2_2_27gene <- read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 3) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_2_27gene$Term <- factor(vdf2_2_27gene$Term, levels = rev(vdf2_2_27gene$Term))
+
+vdf2_2_27geneplot <- ggplot(vdf2_2_27gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 2+27 UP Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=18),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_2_27gene_1.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_2_27geneplot)
+
+```
+
+##2 
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf2_2_104gene <- read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 4) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_2_104gene$Term <- factor(vdf2_2_104gene$Term, levels = rev(vdf2_2_104gene$Term))
+
+vdf2_2_104geneplot <- ggplot(vdf2_2_104gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 2+104 UP Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_2_104gene_2.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_2_104geneplot)
+```
+
+##3
+
+```{r, echo=FALSE, fig.height=35, fig.width=10}
+vdf2_2_64gene <- read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 5) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_2_64gene$Term <- factor(vdf2_2_64gene$Term, levels = rev(vdf2_2_64gene$Term))
+
+vdf2_2_64geneplot <- ggplot(vdf2_2_64gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 2+64 UP Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_2_64gene_3.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_2_64geneplot)
+```
+
+##4
+
+```{r, echo=FALSE, fig.height= 15, fig.width= 10}
+vdf2_684_SNPFAgene <-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 6) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_684_SNPFAgene$Term <- factor(vdf2_684_SNPFAgene$Term, levels = rev(vdf2_684_SNPFAgene$Term))
+
+vdf2_684_SNPFAgeneplot <- ggplot(vdf2_684_SNPFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 684 NSPFA UP Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_684_SNPFAgene_4.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_684_SNPFAgeneplot)
+
+```
+
+##5
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf2_341_CD133NFAgene<-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 7) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_341_CD133NFAgene$Term <- factor(vdf2_341_CD133NFAgene$Term, levels = rev(vdf2_341_CD133NFAgene$Term))
+
+vdf2_341_CD133NFAgeneplot <- ggplot(vdf2_341_CD133NFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 341 CD133-FA UP Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_341_CD133NFAgene_5.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_341_CD133NFAgeneplot)
+```
+
+##6
+
+```{r, echo=FALSE, fig.height=25, fig.width=10}
+
+vdf2_1384_EpCAMNFAgene<-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 8) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_1384_EpCAMNFAgene$Term <- factor(vdf2_1384_EpCAMNFAgene$Term, levels = rev(vdf2_1384_EpCAMNFAgene$Term))
+
+vdf2_1384_EpCAMNFAgeneplot <- ggplot(vdf2_1384_EpCAMNFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 1384 EpCAM-FA UP Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_1384_EpCAMNFAgene_6.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_1384_EpCAMNFAgeneplot)
+
+```
+
+##7 only one enrichment found
+
+```{r , echo=FALSE, fig.height=15, fig.width=10}
+vdf2_1_18gene<-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 9) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_1_18gene$Term <- factor(vdf2_1_18gene$Term, levels = rev(vdf2_1_18gene$Term))
+
+vdf2_1_18geneplot <- ggplot(vdf2_1_18gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 1-18 Down Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_1_18gene_7.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_1_18geneplot)
+```
+
+##8 no enrichment found
+
+##9
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+vdf2_1_75gene<-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 11) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_1_75gene$Term <- factor(vdf2_1_75gene$Term, levels = rev(vdf2_1_75gene$Term))
+
+vdf2_1_75geneplot <- ggplot(vdf2_1_75gene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 1+75 Down Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_1_75gene_9.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_1_75geneplot)
+
+```
+
+##10
+
+```{r , echo=FALSE, fig.height=15, fig.width=10}
+vdf2_580_NSPFAgene<-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 12) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_580_NSPFAgene$Term <- factor(vdf2_580_NSPFAgene$Term, levels = rev(vdf2_580_NSPFAgene$Term))
+
+vdf2_580_NSPFAgeneplot <- ggplot(vdf2_580_NSPFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 580 NSPFA Down Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_580_NSPFAgene_10.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_580_NSPFAgeneplot)
+```
+
+##11
+
+```{r , echo=FALSE, fig.height=15, fig.width=10}
+
+vdf2_436_CD133NFAgene<-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 13) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_436_CD133NFAgene$Term <- factor(vdf2_436_CD133NFAgene$Term, levels = rev(vdf2_436_CD133NFAgene$Term))
+
+vdf2_436_CD133NFAgeneplot <- ggplot(vdf2_436_CD133NFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 436 CD133-FA Down Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_436_CD133NFAgene_11.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_436_CD133NFAgeneplot)
+
+```
+
+
+##12
+
+```{r, echo=FALSE, fig.height=15, fig.width=10}
+
+vdf2_1111_EpCAMNFAgene<-read_excel("data/venn_sorted_NSPFA_CD133-FA_EpCAM-FA_UP_DN_Reg_DEGs_06 06 2023.xlsx", sheet = 14) %>%  select(category, Term,LogP,count) %>% arrange(desc(LogP)) %>% drop_na()
+
+vdf2_1111_EpCAMNFAgene$Term <- factor(vdf2_1111_EpCAMNFAgene$Term, levels = rev(vdf2_1111_EpCAMNFAgene$Term))
+
+vdf2_1111_EpCAMNFAgeneplot <- ggplot(vdf2_1111_EpCAMNFAgene, aes(y = count, x = Term, fill = LogP)) + 
+  geom_bar(stat = "identity", position = "dodge")+
+  ggtitle("Venn comparsion of 1111 EpCAM-FA Down Reglated genes")+   
+  facet_grid(category~., scales = "free", space = "free") + 
+  scale_fill_gradient(low="#F11712",high="#0099F7") +
+  coord_flip() + 
+  theme_classic() +
+  theme(plot.title = element_text(hjust = 1.0, size = (20)),
+        strip.text.y = element_text(size = 14),
+        legend.position ="right",
+        legend.title = element_text(size=18),
+        legend.text = element_text(size=14),
+        axis.text.x = element_text(size=14),
+        axis.text.y = element_text(size=14),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14))
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/vdf2_1111_EpCAMNFAgene_12.jpg", plot = last_plot(),width = 10, height = 15, dpi = 300)
+
+plot(vdf2_1111_EpCAMNFAgeneplot)
+
+
+```
+
+##venn diagram
+
+```{r, echo=FALSE, fig.height=6, fig.width=6}
+library(readxl)
+library(ggvenn)
+library(qpcR)
+## load data from excel table 
+##(Header of table must be name of condition)
+listsp <- read_excel("data/venn_gene_list.xlsx", sheet = 1)
+listcd133 <- read_excel("data/venn_gene_list.xlsx", sheet = 2)
+listepcam <- read_excel("data/venn_gene_list.xlsx", sheet = 3)
+####################################################################
+## convert different length of gene list into data frame using qpcR library
+
+data_gene_venn <- qpcR:::cbind.na(listsp, listcd133,listepcam)
+
+# Convert the data frame to a list
+gene_df_list <- as.list(data_gene_venn)
+
+## Visulize the venn diagram
+upreg_venn <- ggvenn(gene_df_list, 
+       fill_color = c("blue","yellow","green"),
+       stroke_size = 1,
+       show_percentage = FALSE,
+       set_name_color = "black")
+
+upreg_venn1 <- upreg_venn+
+  labs(title = "Venn comparison of UP Regulated DEGs")+
+  theme(plot.title = element_text(color="black", face="bold", size = 20,
+                                  hjust= 0.5))
+
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/venn_UpREg.jpg",
+       plot = last_plot(),width = 6, height = 6, dpi = 1200)
+
+plot(upreg_venn1)
+```
+
+
+```{r, echo=FALSE, fig.height=6, fig.width=6}
+library(readxl)
+library(ggvenn)
+library(qpcR)
+## load data from excel table 
+##(Header of table must be name of condition)
+listsp_dn <- read_excel("data/venn_gene_list.xlsx", sheet = 4)
+listcd133P_dn <- read_excel("data/venn_gene_list.xlsx", sheet = 5)
+listepcamp_dn <- read_excel("data/venn_gene_list.xlsx", sheet = 6)
+####################################################################
+## convert different length of gene list into data frame using qpcR library
+
+data_gene_venn_dn <- qpcR:::cbind.na(listsp_dn, listcd133P_dn,listepcamp_dn)
+
+# Convert the data frame to a list
+gene_df_list_dn <- as.list(data_gene_venn_dn)
+
+## Visulize the venn diagram
+upreg_venn_dn <- ggvenn(gene_df_list_dn, 
+       fill_color = c("blue","yellow","green"),
+       stroke_size = 1,
+       show_percentage = FALSE,
+       set_name_color = "black")
+
+upreg_venn2_dn <- upreg_venn_dn+
+  labs(title = "Venn comparison of Down Regulated DEGs")+
+  theme(plot.title = element_text(color="black", face="bold", size = 20,
+                                  hjust= 0.5))
+
+ggsave("venn_comparsion_msigdb_onco_SPCD133Epcam/venn_DownREg.jpg",
+       plot = last_plot(),width = 6, height = 6, dpi = 1200)
+
+plot(upreg_venn2_dn)
+```
+
+## NSPFA_CD133-FA_EpCAM-FA_ UP regulated DEgs 
+## venn Diagram
+
+```{r,echo=FALSE, fig.height=6, fig.width=10}
+library(readxl)
+library(ggvenn)
+library(qpcR)
+## load data from excel table 
+##(Header of table must be name of condition)
+listnsp_up <- read_excel("data/venn_gene_list.xlsx", sheet = 8)
+listcd133n_up <- read_excel("data/venn_gene_list.xlsx", sheet = 9)
+listepcampn_up <- read_excel("data/venn_gene_list.xlsx", sheet = 10)
+####################################################################
+## convert different length of gene list into data frame using qpcR library
+
+data_gene_venn_NSP_up <- qpcR:::cbind.na(listnsp_up,
+                                         listcd133n_up,
+                                         listepcampn_up)
+
+# Convert the data frame to a list
+gene_df_list_nspup <- as.list(data_gene_venn_NSP_up)
+
+## Visulize the venn diagram
+upreg_venn_nspUp <- ggvenn(gene_df_list_nspup, 
+       fill_color = c("blue","yellow","green"),
+       stroke_size = 1,
+       show_percentage = FALSE,
+       set_name_color = "black",
+       set_name_size = 5)
+
+upreg_venn2_nspup <- upreg_venn_nspUp +
+  labs(title = "Venn comparison of UP Regulated DEGs")+
+  theme(plot.title = element_text(color="black", face="bold", size = 20,
+                                  hjust= 0.5))
+
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/venn_ NSPFAUP REg.jpg",
+       plot = last_plot(),width = 10, height = 6, dpi = 1200)
+
+plot(upreg_venn2_nspup)
+```
+
+## NSPFA_CD133-FA_EpCAM-FA_ Downregulated DEGs 
+## venn Diagram
+
+```{r, echo=FALSE, fig.height= 6, fig.width=8}
+
+library(readxl)
+library(ggvenn)
+library(qpcR)
+## load data from excel table 
+##(Header of table must be name of condition)
+listnsp_dn <- read_excel("data/venn_gene_list.xlsx", sheet = 11)
+listcd133n_dn <- read_excel("data/venn_gene_list.xlsx", sheet = 12)
+listepcampn_dn <- read_excel("data/venn_gene_list.xlsx", sheet = 13)
+####################################################################
+## convert different length of gene list into data frame using qpcR library
+
+data_gene_venn_NSP_dn <- qpcR:::cbind.na(listnsp_dn,
+                                         listcd133n_dn,
+                                         listepcampn_dn)
+
+# Convert the data frame to a list
+gene_df_list_nspdn <- as.list(data_gene_venn_NSP_dn)
+
+## Visualize the Venn diagram
+upreg_venn_nspdn <- ggvenn(gene_df_list_nspdn, 
+       fill_color = c("blue","yellow","green"),
+       stroke_size = 1,
+       show_percentage = FALSE,
+       set_name_color = "black",
+       set_name_size = 5)
+
+upreg_venn2_nspdn <- upreg_venn_nspdn +
+  labs(title = "Venn comparison of Down regulated DEGs")+
+  theme(plot.title = element_text(color="black", face="bold", size = 20,
+                                  hjust= 0.5))
+
+ggsave("Venn_SPCD133Ep+ UP_DN Reg DEGs_08 06 2023/venn_ NSPFA_DownReg.jpg",
+       plot = last_plot(),width = 10, height = 6, dpi = 1200)
+
+plot(upreg_venn2_nspdn)
+
+```
+
+
+
+
+```{r}
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+```
+
+##line plot
+
+
+
+
+## full code to prepare data and ETS line plot
+```{r}
+#raw data
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+ pamkinase %>% 
+  select(1:60, 229:256) %>% 
+  filter(ID == "CDK2_8_20") %>% 
+  pivot_longer(cols = 5:88,
+               names_to = "samples",
+               values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$", "", samples)) %>% 
+  group_by(samples) %>% 
+  summarise(avg_ets = mean(ets),
+            sd_ets = sd(ets),
+            number = n(),
+            sem = sd_ets / sqrt(number))->dmso_p5_cdk2
+
+
+##1. extract first word and extract time point
+
+dmso_p5_cdk2$treatment <- str_extract(dmso_p5_cdk2$samples, "\\w+")
+
+dmso_p5_cdk2$time <- substr(dmso_p5_cdk2$samples, nchar(dmso_p5_cdk2$samples) - 1, nchar(dmso_p5_cdk2$samples))
+
+##line plot
+
+  ggplot(dmso_p5_cdk2, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+			values=c("blue", "red"),
+			breaks=c("Petasin", "DMSO"),
+			labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "time of cycle",
+    y = "Exposure time scalling",
+    title = "CDK2_8_20 Kinase in Petasin 5µg"
+  )+
+      theme_classic()+
+  theme(
+     plot.title = element_text(margin = margin(b=10), color="red", face="bold", hjust = 0.5)
+  )
+
+```
+
+
+
+```{r}
+#raw data
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+dmso_p5_insr <- pamkinase %>% 
+select(1:60,229:256) %>% 
+  filter( ID == "INSR_1348_1360") %>% 
+  pivot_longer(cols = c(5:88),
+             names_to = "samples",
+             values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$","",samples)) %>% 
+  group_by(samples)%>% summarise(avg_ets = mean(ets), sd_ets = sd(ets), number = n(), sem = sd_ets/sqrt(number))
+
+##1. extract first word and extract time point
+
+dmso_p5_insr$treatment <- str_extract(dmso_p5_insr$samples, "\\w+")
+
+dmso_p5_insr$time <- substr(dmso_p5_insr$samples, nchar(dmso_p5_insr$samples) - 1, nchar(dmso_p5_insr$samples))
+
+##line plot
+
+  ggplot(dmso_p5_insr, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+			values=c("blue", "red"),
+			breaks=c("Petasin", "DMSO"),
+			labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "time of cycle",
+    y = "Exposure time scalling",
+    title = "INSR_1348_1360 Kinase in Petasin 5µg"
+  )+
+      theme_classic()+
+  theme(
+     plot.title = element_text(margin = margin(b=10), color="red", face="bold", hjust = 0.5)
+  )
+```
+
+MK08_181_191
+
+
+```{r}
+#raw data
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+dmso_p5_mk08 <- pamkinase %>% 
+select(1:60,229:256) %>% 
+  filter( ID == "MK08_181_191") %>% 
+  pivot_longer(cols = c(5:88),
+             names_to = "samples",
+             values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$","",samples)) %>% 
+  group_by(samples)%>% summarise(avg_ets = mean(ets), sd_ets = sd(ets), number = n(), sem = sd_ets/sqrt(number))
+
+##1. extract first word and extract time point
+
+dmso_p5_mk08$treatment <- str_extract(dmso_p5_mk08$samples, "\\w+")
+
+dmso_p5_mk08$time <- substr(dmso_p5_mk08$samples, nchar(dmso_p5_mk08$samples) - 1, nchar(dmso_p5_mk08$samples))
+
+##line plot
+
+  ggplot(dmso_p5_mk08, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+			values=c("blue", "red"),
+			breaks=c("Petasin", "DMSO"),
+			labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "time of cycle",
+    y = "Exposure time scalling",
+    title = "MK08_181_191 Kinase in Petasin 5µg"
+  )+
+      theme_classic()+
+  theme(
+     plot.title = element_text(margin = margin(b=10), color="black", face="bold", hjust = 0.5)
+  )
+```
+
+##FGFR3_641_653
+
+```{r}
+#raw data
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+dmso_p5_FGFR3 <- pamkinase %>% 
+select(1:60,229:256) %>% 
+  filter( ID == "FGFR3_641_653") %>% 
+  pivot_longer(cols = c(5:88),
+             names_to = "samples",
+             values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$","",samples)) %>% 
+  group_by(samples)%>% summarise(avg_ets = mean(ets), sd_ets = sd(ets), number = n(), sem = sd_ets/sqrt(number))
+
+##1. extract first word and extract time point
+
+dmso_p5_FGFR3$treatment <- str_extract(dmso_p5_FGFR3$samples, "\\w+")
+
+dmso_p5_FGFR3$time <- substr(dmso_p5_FGFR3$samples, nchar(dmso_p5_FGFR3$samples) - 1, nchar(dmso_p5_FGFR3$samples))
+
+##line plot
+
+  ggplot(dmso_p5_FGFR3, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+			values=c("blue", "red"),
+			breaks=c("Petasin", "DMSO"),
+			labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "time of cycle",
+    y = "Exposure time scalling",
+    title = "FGFR3_641_653 Kinase in Petasin 5µg"
+  )+
+      theme_classic()+
+  theme(
+     plot.title = element_text(margin = margin(b=10), color="black", face="bold", hjust = 0.5)
+  )
+```
+
+FAK1_569_581
+
+```{r}
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+dmso_p5_FAK1 <- pamkinase %>% 
+select(1:60,229:256) %>% 
+  filter( ID == "FAK1_569_581") %>% 
+  pivot_longer(cols = c(5:88),
+             names_to = "samples",
+             values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$","",samples)) %>% 
+  group_by(samples)%>% summarise(avg_ets = mean(ets), sd_ets = sd(ets), number = n(), sem = sd_ets/sqrt(number))
+
+##1. extract first word and extract time point
+
+dmso_p5_FAK1$treatment <- str_extract(dmso_p5_FAK1$samples, "\\w+")
+
+dmso_p5_FAK1$time <- substr(dmso_p5_FAK1$samples, nchar(dmso_p5_FAK1$samples) - 1, nchar(dmso_p5_FAK1$samples))
+
+##line plot
+
+  ggplot(dmso_p5_FAK1, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+			values=c("blue", "red"),
+			breaks=c("Petasin", "DMSO"),
+			labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "time of cycle",
+    y = "Exposure time scalling",
+    title = "FAK1_569_581 Kinase in Petasin 5µg"
+  )+
+      theme_classic()+
+  theme(
+     plot.title = element_text(margin = margin(b=10), color="black", face="bold", hjust = 0.5)
+  )
+```
+
+NTRK2_696_708
+
+```{r, echo=FALSE}
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+dmso_p5_NTKR2 <- pamkinase %>% 
+select(1:60,229:256) %>% 
+  filter( ID == "NTRK2_696_708") %>% 
+  pivot_longer(cols = c(5:88),
+             names_to = "samples",
+             values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$","",samples)) %>% 
+  group_by(samples)%>% summarise(avg_ets = mean(ets), sd_ets = sd(ets), number = n(), sem = sd_ets/sqrt(number))
+
+##1. extract first word and extract time point
+
+dmso_p5_NTKR2$treatment <- str_extract(dmso_p5_NTKR2$samples, "\\w+")
+
+dmso_p5_NTKR2$time <- substr(dmso_p5_NTKR2$samples, nchar(dmso_p5_NTKR2$samples) - 1, nchar(dmso_p5_NTKR2$samples))
+
+##line plot
+
+  ggplot(dmso_p5_NTKR2, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+			values=c("blue", "red"),
+			breaks=c("Petasin", "DMSO"),
+			labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "time of cycle",
+    y = "Exposure time scalling",
+    title = "NTRK2_696_708 Kinase in Petasin 5µg"
+  )+
+      theme_classic()+
+  theme(
+     plot.title = element_text(margin = margin(b=10), color="black", face="bold", hjust = 0.5)
+  )
+```
+
+EPHB4_583_595
+
+```{r, echo=FALSE}
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+dmso_p5_EPHB4 <- pamkinase %>% 
+select(1:60,229:256) %>% 
+  filter( ID == "EPHB4_583_595") %>% 
+  pivot_longer(cols = c(5:88),
+             names_to = "samples",
+             values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$","",samples)) %>% 
+  group_by(samples)%>% summarise(avg_ets = mean(ets), sd_ets = sd(ets), number = n(), sem = sd_ets/sqrt(number))
+
+##1. extract first word and extract time point
+
+dmso_p5_EPHB4$treatment <- str_extract(dmso_p5_EPHB4$samples, "\\w+")
+
+dmso_p5_EPHB4$time <- substr(dmso_p5_EPHB4$samples, nchar(dmso_p5_EPHB4$samples) - 1, nchar(dmso_p5_EPHB4$samples))
+
+##line plot
+
+  ggplot(dmso_p5_EPHB4, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+			values=c("blue", "red"),
+			breaks=c("Petasin", "DMSO"),
+			labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "time of cycle",
+    y = "Exposure time scalling",
+    title = "EPHB4_583_595 Kinase in Petasin 5µg"
+  )+
+      theme_classic()+
+  theme(
+     plot.title = element_text(margin = margin(b=10), color="black", face="bold", hjust = 0.5),
+     axis.text = element_text(face="bold")
+  )
+```
+
+
+EPHB1_921_933
+
+
+```{r}
+pamkinase <- read_excel("data/venn_gene_list_ETS.xlsx",
+          sheet = 14 , skip = 8)
+
+## filter data base on desired gene
+dmso_p5_EPHB1 <- pamkinase %>% 
+select(1:60,229:256) %>% 
+  filter( ID == "EPHB1_921_933") %>% 
+  pivot_longer(cols = c(5:88),
+             names_to = "samples",
+             values_to = "ets") %>% 
+  mutate(samples = gsub("\\.\\.\\..*$","",samples)) %>% 
+  group_by(samples)%>% summarise(avg_ets = mean(ets), sd_ets = sd(ets), number = n(), sem = sd_ets/sqrt(number))
+
+##1. extract first word 
+
+ dmso_p5_EPHB1$treatment <- str_extract(dmso_p5_EPHB1$samples, "\\w+")
+
+ ## last two digits
+dmso_p5_EPHB1$time <- substr(dmso_p5_EPHB1$samples, nchar(dmso_p5_EPHB1$samples) - 1, nchar(dmso_p5_EPHB1$samples))
+
+##line plot
+
+  ggplot(dmso_p5_EPHB1, aes(x=time, y=avg_ets, group= treatment, color=treatment)) + 
+     geom_errorbar(aes(ymin=avg_ets-sem, ymax=avg_ets+sem), width=0.1) +
+     geom_line(size = 1) + geom_point()+
+  scale_color_manual(name=NULL,
+      values=c("blue", "red"),
+      breaks=c("Petasin", "DMSO"),
+      labels=c("Petasin", "DMSO"))+
+  labs(
+    x = "Number of cycle",
+    y = "Exposure time scalling",
+    title = "EPHB1_921_933 Kinase in Petasin 5µg")+
+    theme_classic()+
+    theme(
+     plot.title = element_text(margin = margin(b=10), color="black", face="bold", hjust = 0.5),
+     axis.title.x = element_text(face= "bold", size = 15, colour = "black"),
+     axis.title.y = element_text(face = "bold", size = 15, colour = "black"),
+     legend.position = c(0.1,0.9),
+     legend.text = element_text(size = 12, face = "bold")
+    )
+```
+
+Petasin kinase expression data analysis
+```{r}
+pamexp <- read_excel("data/venn_gene_list_ETS.xlsx",sheet = 15,skip = 7)
+```
+
+```{r}
+pamp5longer <- pamexp %>% 
+  select(!4) %>% 
+  pivot_longer(
+    cols = 4:16,
+    names_to = "sample",
+    values_to = "exp"
+  ) %>% 
+  mutate(sample = gsub("\\.\\.\\..*$","",sample))
+
+#take out the first word
+#vector$newcolumn name <- function(vector$column, expression)
+pamp5longer$treatment <- str_extract(pamp5longer$sample, "\\w+")
+
+pamp5longer$sample <- gsub("\\s\\d$", "", pamp5longer$sample)
+
+pamp5longer$exp <- as.numeric(pamp5longer$exp)
+```
+
+
+```{r}
+pamp5longer %>% 
+  filter(sample == "Petasin P5") %>% 
+  group_by(ID) %>% 
+  summarize(log2_exp_P5 = mean(exp))-> P5_Pam
+
+pamp5longer %>% 
+  filter(sample == "Petasin P1") %>% 
+  group_by(ID) %>% 
+  summarize(log2_exp_P1 = mean(exp))-> P1_Pam
+
+pamp5longer %>% 
+  filter(sample == "DMSO DMSO") %>% 
+  group_by(ID) %>% 
+  summarize(log2_exp_DMSO = mean(exp))-> DMSO_Pam
+
+#Join the all data vectors using merge function
+merge_df <- merge(P1_Pam,P5_Pam, by = "ID")
+pamlog2 <- merge(merge_df,DMSO_Pam, by = "ID")
+```
+
+```{r}
+pamlog2$norexp_log2_P1_DMSO <- pamlog2$log2_exp_P1 - pamlog2$log2_exp_DMSO
+pamlog2$norexp_log2_P5_DMSO <- pamlog2$log2_exp_P5 - pamlog2$log2_exp_DMSO
+```
+
+
+```{r}
+pamlog2$p1_FC <- 2^pamlog2$norexp_log2_P1_DMSO
+pamlog2$p5_FC <- 2^pamlog2$norexp_log2_P5_DMSO
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
