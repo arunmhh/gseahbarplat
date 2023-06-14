@@ -1,0 +1,25 @@
+Category,Term,LogP,Count
+Hallmark Gene Sets,HALLMARK E2F TARGETS,-21.87258913,19
+Hallmark Gene Sets,HALLMARK G2M CHECKPOINT,-17.22029999,16
+Hallmark Gene Sets,HALLMARK MITOTIC SPINDLE,-12.90059277,13
+Hallmark Gene Sets,HALLMARK MTORC1 SIGNALING,-10.16736171,20
+Hallmark Gene Sets,HALLMARK HYPOXIA,-3.26398811,5
+Hallmark Gene Sets,HALLMARK PI3K AKT MTOR SIGNALING,-2.288055971,3
+KEGG Pathway,HIF-1 signaling pathway,-2.24300531,3
+KEGG Pathway,Cell cycle,-6.022821562,7
+KEGG Pathway,Human T-cell leukemia virus 1 infection,-2.193998069,4
+KEGG Pathway,Viral carcinogenesis,-1.517962006,3
+KEGG Pathway,Protein digestion and absorption,-4.616245942,5
+Hallmark Gene Sets,HALLMARK EPITHELIAL MESENCHYMAL TRANSITION,-4.258187806,6
+Hallmark Gene Sets,HALLMARK UV RESPONSE DN,-1.91322831,3
+KEGG Pathway,p53 signaling pathway,-3.988031058,4
+KEGG Pathway,Cellular senescence,-1.820528878,3
+KEGG Pathway,Human immunodeficiency virus 1 infection,-1.475721359,3
+Hallmark Gene Sets,HALLMARK GLYCOLYSIS,-6.45404551,8
+Hallmark Gene Sets,HALLMARK MYC TARGETS V1,-3.26398811,5
+Hallmark Gene Sets,HALLMARK DNA REPAIR,-1.865824125,3
+Hallmark Gene Sets,HALLMARK ESTROGEN RESPONSE LATE,-4.258187806,6
+KEGG Pathway,Relaxin signaling pathway,-3.044423108,4
+KEGG Pathway,Diabetic cardiomyopathy,-2.329930165,4
+KEGG Pathway,Pathways in cancer,-1.499109148,5
+KEGG Pathway,Lipid and atherosclerosis,-1.460369199,3
